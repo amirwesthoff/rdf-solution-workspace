@@ -70,6 +70,8 @@ For a complete GitHub + HF Spaces publishing flow, see:
 
 - [docs/publish-github-hf-spaces.md](docs/publish-github-hf-spaces.md)
 
+Note: use `hf auth login` (the older `huggingface-cli login` is deprecated).
+
 Use these settings when creating a new Space:
 
 1. SDK: `Gradio`

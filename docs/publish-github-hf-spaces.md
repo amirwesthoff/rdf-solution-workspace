@@ -58,13 +58,37 @@ Install CLI if needed:
 pip install -U huggingface_hub
 ```
 
-Login:
+Login (new CLI):
 
 ```powershell
-huggingface-cli login
+hf auth login
 ```
 
-## 5) Push Same Codebase To Space
+If `hf` is not on PATH in your current shell, use:
+
+```powershell
+.\.venv\Scripts\hf.exe auth login
+```
+
+Optional check:
+
+```powershell
+hf auth whoami
+```
+
+## 5) Create/Connect Space Repo And Push
+
+Create the Space repository from CLI (safe to re-run with --exist-ok):
+
+```powershell
+hf repos create YOUR_HF_USER/rdf-demonstrator --type space --space-sdk gradio --exist-ok
+```
+
+If `hf` is not on PATH:
+
+```powershell
+.\.venv\Scripts\hf.exe repos create YOUR_HF_USER/rdf-demonstrator --type space --space-sdk gradio --exist-ok
+```
 
 Add Space as another git remote and push:
 
