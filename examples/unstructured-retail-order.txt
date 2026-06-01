@@ -1,0 +1,6 @@
+ORDER: ORD-2001
+DATE: 2026-05-30
+CUSTOMER: CUST-003 | Charlie Shopper
+STORE: STR-AMS-CENTRAL | Amsterdam Central
+ITEM: SKU-APPLE-001 | Gala Apples | qty=2 | unit=1.50
+ITEM: SKU-BREAD-002 | Wholegrain Bread | qty=1 | unit=2.40

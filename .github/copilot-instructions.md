@@ -1,0 +1,6 @@
+- Keep strict boundaries between `contracts`, `extraction`, `validation`, and `qa`.
+- Treat `contracts` as the semantic source of truth.
+- Ensure extraction writes only to `urn:graph:raw`.
+- Ensure validation decides promotion to `urn:graph:asserted` and writes reports to `urn:graph:validation-reports`.
+- Ensure QA reads from asserted and inferred graphs and returns provenance-aware responses.
+- Prefer incremental, test-backed changes and avoid breaking graph namespace conventions.

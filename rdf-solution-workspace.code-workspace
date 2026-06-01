@@ -1,0 +1,17 @@
+{
+  "folders": [
+    { "path": "." }
+  ],
+  "settings": {
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+      "extraction/tests",
+      "validation/tests",
+      "qa/tests"
+    ],
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/.pytest_cache": true
+    }
+  }
+}

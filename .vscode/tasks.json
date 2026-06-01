@@ -1,0 +1,66 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "setup",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "scripts/setup.ps1"],
+      "group": "build"
+    },
+    {
+      "label": "infra-up",
+      "type": "shell",
+      "command": "docker compose up -d",
+      "group": "build"
+    },
+    {
+      "label": "infra-down",
+      "type": "shell",
+      "command": "docker compose down",
+      "group": "build"
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "pytest",
+      "group": "test"
+    },
+    {
+      "label": "load-sample",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "scripts/load-sample.ps1"]
+    },
+    {
+      "label": "extract-unstructured",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "extraction_pipeline.cli", "--input", "examples/unstructured-retail-order.txt"]
+    },
+    {
+      "label": "verify-graphs",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-ExecutionPolicy", "Bypass", "-File", "scripts/verify-graph.ps1"]
+    },
+    {
+      "label": "validate-promote",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "validation_gate.cli"]
+    },
+    {
+      "label": "materialize-inferred",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "validation_gate.infer"]
+    },
+    {
+      "label": "qa-api",
+      "type": "shell",
+      "command": "uvicorn qa_service.main:app --app-dir qa/src --reload",
+      "isBackground": true
+    }
+  ]
+}

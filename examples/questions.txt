@@ -1,0 +1,6 @@
+Who are the customers in the sample data?
+What are the top products by units sold?
+What is the total value of each order?
+Show the product mix.
+Who are repeat customers?
+What is the store daily revenue?

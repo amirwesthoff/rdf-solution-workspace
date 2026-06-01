@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rdf-validation"
+version = "0.1.0"
+description = "RDF validation and promotion pipeline"
+requires-python = ">=3.11"
+dependencies = [
+  "rdflib>=7.0.0",
+  "pyshacl>=0.25.0",
+]
+
+[project.scripts]
+validate-promote = "validation_gate.cli:main"
+materialize-inferred = "validation_gate.infer:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

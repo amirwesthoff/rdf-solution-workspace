@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rdf-extraction"
+version = "0.1.0"
+description = "Unstructured data extraction to RDF"
+requires-python = ">=3.11"
+dependencies = [
+  "rdflib>=7.0.0",
+  "openai>=1.40.0",
+]
+
+[project.scripts]
+extract-unstructured = "extraction_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

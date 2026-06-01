@@ -1,0 +1,15 @@
+# CQ-ID: CQ-003
+# CQ-Registry: cq-registry.yaml
+# NL-Question: What is the total value of each order and who placed it?
+
+PREFIX ex: <http://example.org/kg/>
+
+SELECT ?order ?orderId ?customerName ?total
+WHERE {
+  ?order a ex:Order ;
+         ex:orderId ?orderId ;
+         ex:placedBy ?customer ;
+         ex:totalAmount ?total .
+  ?customer ex:customerName ?customerName .
+}
+ORDER BY ?orderId

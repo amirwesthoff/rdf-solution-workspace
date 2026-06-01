@@ -1,0 +1,15 @@
+# CQ-ID: CQ-002
+# CQ-Registry: cq-registry.yaml
+# NL-Question: What are the top products by units sold?
+
+PREFIX ex: <http://example.org/kg/>
+
+SELECT ?product ?productName (SUM(?qty) AS ?totalUnits)
+WHERE {
+  ?line a ex:OrderLine ;
+        ex:lineProduct ?product ;
+        ex:lineQuantity ?qty .
+  ?product ex:productName ?productName .
+}
+GROUP BY ?product ?productName
+ORDER BY DESC(?totalUnits)

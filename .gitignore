@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# IDE
+.vscode/*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local env
+.env
+.env.*
+
+# Local runtime graph store
+data/graph-store/
+data/validation-report.txt
+
+# Build
+build/
+dist/

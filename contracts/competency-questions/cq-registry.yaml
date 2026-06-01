@@ -1,0 +1,59 @@
+version: 1
+updated: "2026-05-31"
+domain: retail
+
+competency_questions:
+  - id: CQ-001
+    title: List customers
+    question: "Who are the customers in the knowledge graph?"
+    rationale: "Baseline entity coverage check for customer extraction and promotion."
+    query_template: "cq-01-people.rq"
+    expected_variables:
+      - customer
+      - customerName
+    status: active
+
+  - id: CQ-002
+    title: Top products by units
+    question: "What are the top products by units sold?"
+    rationale: "Verifies order-line aggregation and product linking quality."
+    query_template: "cq-02-top-products.rq"
+    expected_variables:
+      - product
+      - productName
+      - totalUnits
+    status: active
+
+  - id: CQ-003
+    title: Order totals by customer
+    question: "What is the total value of each order and who placed it?"
+    rationale: "Verifies order-level financial facts and customer association."
+    query_template: "cq-03-order-totals.rq"
+    expected_variables:
+      - order
+      - orderId
+      - customerName
+      - total
+    status: active
+
+  - id: CQ-004
+    title: Repeat customers
+    question: "Which customers have placed more than one order?"
+    rationale: "Supports loyalty and retention analysis."
+    query_template: null
+    expected_variables:
+      - customer
+      - name
+      - orderCount
+    status: planned
+
+  - id: CQ-005
+    title: Store daily revenue
+    question: "What is daily revenue per store?"
+    rationale: "Supports operational and financial reporting by location/day."
+    query_template: null
+    expected_variables:
+      - storeName
+      - orderDate
+      - dailyRevenue
+    status: planned

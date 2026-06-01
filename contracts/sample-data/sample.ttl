@@ -1,0 +1,69 @@
+@prefix ex: <http://example.org/kg/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:store-str-ams-central a ex:Store ;
+  ex:storeId "STR-AMS-CENTRAL" ;
+  ex:storeName "Amsterdam Central" .
+
+ex:customer-cust-001 a ex:Customer ;
+  ex:customerId "CUST-001" ;
+  ex:customerName "Alice Example" .
+
+ex:customer-cust-002 a ex:Customer ;
+  ex:customerId "CUST-002" ;
+  ex:customerName "Bob Builder" .
+
+ex:product-sku-apple-001 a ex:Product ;
+  ex:sku "SKU-APPLE-001" ;
+  ex:productName "Gala Apples" ;
+  ex:listPrice "1.50"^^xsd:decimal .
+
+ex:product-sku-bread-002 a ex:Product ;
+  ex:sku "SKU-BREAD-002" ;
+  ex:productName "Wholegrain Bread" ;
+  ex:listPrice "2.40"^^xsd:decimal .
+
+ex:product-sku-milk-003 a ex:Product ;
+  ex:sku "SKU-MILK-003" ;
+  ex:productName "Semi-Skimmed Milk" ;
+  ex:listPrice "1.20"^^xsd:decimal .
+
+ex:order-ord-1001 a ex:Order ;
+  ex:orderId "ORD-1001" ;
+  ex:orderDate "2026-05-30"^^xsd:date ;
+  ex:placedBy ex:customer-cust-001 ;
+  ex:soldAtStore ex:store-str-ams-central ;
+  ex:hasLine ex:orderline-ord-1001-1, ex:orderline-ord-1001-2 ;
+  ex:totalAmount "5.40"^^xsd:decimal .
+
+ex:orderline-ord-1001-1 a ex:OrderLine ;
+  ex:lineProduct ex:product-sku-apple-001 ;
+  ex:lineQuantity 2 ;
+  ex:lineUnitPrice "1.50"^^xsd:decimal ;
+  ex:lineTotal "3.00"^^xsd:decimal .
+
+ex:orderline-ord-1001-2 a ex:OrderLine ;
+  ex:lineProduct ex:product-sku-bread-002 ;
+  ex:lineQuantity 1 ;
+  ex:lineUnitPrice "2.40"^^xsd:decimal ;
+  ex:lineTotal "2.40"^^xsd:decimal .
+
+ex:order-ord-1002 a ex:Order ;
+  ex:orderId "ORD-1002" ;
+  ex:orderDate "2026-05-31"^^xsd:date ;
+  ex:placedBy ex:customer-cust-002 ;
+  ex:soldAtStore ex:store-str-ams-central ;
+  ex:hasLine ex:orderline-ord-1002-1, ex:orderline-ord-1002-2 ;
+  ex:totalAmount "3.90"^^xsd:decimal .
+
+ex:orderline-ord-1002-1 a ex:OrderLine ;
+  ex:lineProduct ex:product-sku-apple-001 ;
+  ex:lineQuantity 1 ;
+  ex:lineUnitPrice "1.50"^^xsd:decimal ;
+  ex:lineTotal "1.50"^^xsd:decimal .
+
+ex:orderline-ord-1002-2 a ex:OrderLine ;
+  ex:lineProduct ex:product-sku-milk-003 ;
+  ex:lineQuantity 2 ;
+  ex:lineUnitPrice "1.20"^^xsd:decimal ;
+  ex:lineTotal "2.40"^^xsd:decimal .

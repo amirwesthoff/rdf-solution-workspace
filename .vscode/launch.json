@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run QA API",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["qa_service.main:app", "--app-dir", "qa/src", "--reload"],
+      "justMyCode": true
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+@prefix ex: <http://example.org/kg/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex: a owl:Ontology ;
+  rdfs:label "Retail KG Ontology"@en .
+
+ex:RetailDocument a owl:Class ;
+  rdfs:label "Retail Document"@en .
+
+ex:Customer a owl:Class ;
+  rdfs:label "Customer"@en .
+
+ex:Store a owl:Class ;
+  rdfs:label "Store"@en .
+
+ex:Product a owl:Class ;
+  rdfs:label "Product"@en .
+
+ex:Order a owl:Class ;
+  rdfs:label "Order"@en .
+
+ex:OrderLine a owl:Class ;
+  rdfs:label "Order Line"@en .
+
+ex:customerId a owl:DatatypeProperty ;
+  rdfs:domain ex:Customer ;
+  rdfs:range xsd:string ;
+  rdfs:label "customer id"@en .
+
+ex:customerName a owl:DatatypeProperty ;
+  rdfs:domain ex:Customer ;
+  rdfs:range xsd:string ;
+  rdfs:label "customer name"@en .
+
+ex:storeId a owl:DatatypeProperty ;
+  rdfs:domain ex:Store ;
+  rdfs:range xsd:string ;
+  rdfs:label "store id"@en .
+
+ex:storeName a owl:DatatypeProperty ;
+  rdfs:domain ex:Store ;
+  rdfs:range xsd:string ;
+  rdfs:label "store name"@en .
+
+ex:sku a owl:DatatypeProperty ;
+  rdfs:domain ex:Product ;
+  rdfs:range xsd:string ;
+  rdfs:label "sku"@en .
+
+ex:productName a owl:DatatypeProperty ;
+  rdfs:domain ex:Product ;
+  rdfs:range xsd:string ;
+  rdfs:label "product name"@en .
+
+ex:listPrice a owl:DatatypeProperty ;
+  rdfs:domain ex:Product ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "list price"@en .
+
+ex:orderId a owl:DatatypeProperty ;
+  rdfs:domain ex:Order ;
+  rdfs:range xsd:string ;
+  rdfs:label "order id"@en .
+
+ex:orderDate a owl:DatatypeProperty ;
+  rdfs:domain ex:Order ;
+  rdfs:range xsd:date ;
+  rdfs:label "order date"@en .
+
+ex:totalAmount a owl:DatatypeProperty ;
+  rdfs:domain ex:Order ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "total amount"@en .
+
+ex:lineQuantity a owl:DatatypeProperty ;
+  rdfs:domain ex:OrderLine ;
+  rdfs:range xsd:integer ;
+  rdfs:label "line quantity"@en .
+
+ex:lineUnitPrice a owl:DatatypeProperty ;
+  rdfs:domain ex:OrderLine ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "line unit price"@en .
+
+ex:lineTotal a owl:DatatypeProperty ;
+  rdfs:domain ex:OrderLine ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "line total"@en .
+
+ex:placedBy a owl:ObjectProperty ;
+  rdfs:domain ex:Order ;
+  rdfs:range ex:Customer ;
+  rdfs:label "placed by"@en .
+
+ex:placedOrder a owl:ObjectProperty ;
+  rdfs:domain ex:Customer ;
+  rdfs:range ex:Order ;
+  owl:inverseOf ex:placedBy ;
+  rdfs:label "placed order"@en .
+
+ex:soldAtStore a owl:ObjectProperty ;
+  rdfs:domain ex:Order ;
+  rdfs:range ex:Store ;
+  rdfs:label "sold at store"@en .
+
+ex:hasLine a owl:ObjectProperty ;
+  rdfs:domain ex:Order ;
+  rdfs:range ex:OrderLine ;
+  rdfs:label "has line"@en .
+
+ex:lineOfOrder a owl:ObjectProperty ;
+  rdfs:domain ex:OrderLine ;
+  rdfs:range ex:Order ;
+  owl:inverseOf ex:hasLine ;
+  rdfs:label "line of order"@en .
+
+ex:lineProduct a owl:ObjectProperty ;
+  rdfs:domain ex:OrderLine ;
+  rdfs:range ex:Product ;
+  rdfs:label "line product"@en .
+
+ex:orderedProduct a owl:ObjectProperty ;
+  rdfs:domain ex:Customer ;
+  rdfs:range ex:Product ;
+  rdfs:label "ordered product"@en .
+
+ex:extractedFromDocument a owl:ObjectProperty ;
+  rdfs:domain ex:Order ;
+  rdfs:range ex:RetailDocument ;
+  rdfs:label "extracted from document"@en .

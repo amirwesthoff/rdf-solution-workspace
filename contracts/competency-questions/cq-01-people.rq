@@ -1,0 +1,12 @@
+# CQ-ID: CQ-001
+# CQ-Registry: cq-registry.yaml
+# NL-Question: Who are the customers in the knowledge graph?
+
+PREFIX ex: <http://example.org/kg/>
+
+SELECT ?customer ?customerName
+WHERE {
+  ?customer a ex:Customer ;
+            ex:customerName ?customerName .
+}
+ORDER BY ?customerName

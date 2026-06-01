@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rdf-solution-workspace"
+version = "0.1.0"
+description = "Monorepo workspace for RDF extraction, validation, and QA pipelines"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["extraction/src", "validation/src", "qa/src"]
+testpaths = ["extraction/tests", "validation/tests", "qa/tests"]
+markers = [
+	"integration: tests that require a running Fuseki instance",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

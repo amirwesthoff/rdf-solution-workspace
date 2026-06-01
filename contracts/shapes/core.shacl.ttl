@@ -1,0 +1,167 @@
+@prefix ex: <http://example.org/kg/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:CustomerShape a sh:NodeShape ;
+  sh:targetClass ex:Customer ;
+  sh:property [
+    sh:path ex:customerId ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:pattern "^CUST-[0-9]{3,}$" ;
+  ] ;
+  sh:property [
+    sh:path ex:customerName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:minLength 3 ;
+  ] .
+
+ex:StoreShape a sh:NodeShape ;
+  sh:targetClass ex:Store ;
+  sh:property [
+    sh:path ex:storeId ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:pattern "^STR-[A-Z0-9-]+$" ;
+  ] ;
+  sh:property [
+    sh:path ex:storeName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+ex:ProductShape a sh:NodeShape ;
+  sh:targetClass ex:Product ;
+  sh:property [
+    sh:path ex:sku ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:pattern "^SKU-[A-Z0-9-]+$" ;
+  ] ;
+  sh:property [
+    sh:path ex:productName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:minLength 2 ;
+  ] ;
+  sh:property [
+    sh:path ex:listPrice ;
+    sh:datatype xsd:decimal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:minInclusive 0 ;
+  ] .
+
+ex:OrderLineShape a sh:NodeShape ;
+  sh:targetClass ex:OrderLine ;
+  sh:property [
+    sh:path ex:lineProduct ;
+    sh:class ex:Product ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path ex:lineQuantity ;
+    sh:datatype xsd:integer ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:minInclusive 1 ;
+  ] ;
+  sh:property [
+    sh:path ex:lineUnitPrice ;
+    sh:datatype xsd:decimal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:minInclusive 0 ;
+  ] ;
+  sh:property [
+    sh:path ex:lineTotal ;
+    sh:datatype xsd:decimal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:minInclusive 0 ;
+  ] ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:message "lineTotal must equal lineQuantity * lineUnitPrice." ;
+    sh:select """
+      PREFIX ex: <http://example.org/kg/>
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      SELECT $this
+      WHERE {
+        $this ex:lineQuantity ?qty ;
+              ex:lineUnitPrice ?unit ;
+              ex:lineTotal ?total .
+        BIND((xsd:decimal(?qty) * xsd:decimal(?unit)) AS ?expected)
+        FILTER(xsd:decimal(?total) != ?expected)
+      }
+    """ ;
+  ] .
+
+ex:OrderShape a sh:NodeShape ;
+  sh:targetClass ex:Order ;
+  sh:property [
+    sh:path ex:orderId ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:pattern "^ORD-[0-9]{4,}$" ;
+  ] ;
+  sh:property [
+    sh:path ex:orderDate ;
+    sh:datatype xsd:date ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path ex:placedBy ;
+    sh:class ex:Customer ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path ex:soldAtStore ;
+    sh:class ex:Store ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path ex:hasLine ;
+    sh:class ex:OrderLine ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path ex:totalAmount ;
+    sh:datatype xsd:decimal ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:minInclusive 0 ;
+  ] ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:message "totalAmount must equal the sum of lineTotal values for all hasLine items." ;
+    sh:select """
+      PREFIX ex: <http://example.org/kg/>
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      SELECT $this
+      WHERE {
+        $this ex:totalAmount ?orderTotal .
+        {
+          SELECT $this (SUM(xsd:decimal(?lineTotal)) AS ?lineSum)
+          WHERE {
+            $this ex:hasLine ?line .
+            ?line ex:lineTotal ?lineTotal .
+          }
+          GROUP BY $this
+        }
+        FILTER(xsd:decimal(?orderTotal) != ?lineSum)
+      }
+    """ ;
+  ] .
