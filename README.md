@@ -1,3 +1,11 @@
+---
+title: RDF Demonstrator
+sdk: gradio
+app_file: app.py
+python_version: "3.11"
+pinned: false
+---
+
 # RDF Solution Workspace
 
 A single monorepo for four related RDF pipelines:
